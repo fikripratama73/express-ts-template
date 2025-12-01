@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String        @id @default(uuid())
+  name         String
+  email        String        @unique
+  password     String
+  role         Role
+
+  transactions Transaction[]
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("users")
+}
+
+enum Role {
+  admin
+  customer
+}
+
+enum TransactionStatus {
+  pending
+  waiting_payment
+  paid
+  processing
+  done
+  failed
+  canceled
+}
+
+model Game {
+  id            String        @id @default(uuid())
+  name          String
+  imageUrl      String?
+  needZoneId    Boolean       @default(false)
+  needServerId  Boolean       @default(false)
+
+  products      Product[]
+  transactions  Transaction[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@map("games")
+}
+
+model Product {
+  id           String     @id @default(uuid())
+  gameId       String
+
+  name         String
+  value        Int?
+  price        Int
+  description  String?
+
+  Game         Game        @relation(fields: [gameId], references: [id])
+  transactions Transaction[]
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@map("products")
+}
+
+model PaymentMethod {
+  id            String @id @default(uuid())
+  name          String
+  type          String
+  fee           Int     @default(0)
+
+  transactions  Transaction[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("payment_methods")
+}
+
+model Transaction {
+  id               String     @id @default(uuid())
+
+  userId           String
+  gameId           String
+  productId        String
+  paymentMethodId  String
+
+  playerId         String
+  zoneId           String?
+  serverId         String?
+
+  totalPrice       Int
+  status           TransactionStatus  @default(pending)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  User             User          @relation(fields: [userId], references: [id])
+  Game             Game          @relation(fields: [gameId], references: [id])
+  Product          Product       @relation(fields: [productId], references: [id])
+  PaymentMethod    PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+
+  @@map("transactions")
+}
