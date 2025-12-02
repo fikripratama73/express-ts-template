@@ -2,10 +2,10 @@ import Cookies from "cookies";
 export function setCookie(req, res, name, value, options = {}) {
     const cookies = new Cookies(req, res);
     cookies.set(name, value, {
-        httpOnly: options.httpOnly ?? true,
-        secure: options.secure ?? process.env.NODE_ENV === "production",
-        sameSite: options.sameSite ?? "lax",
-        maxAge: options.maxAge ?? 24 * 60 * 60 * 1000, // default 1 hari
+        httpOnly: options.httpOnly ?? (process.env.COOKIE_HTTPONLY === "true"),
+        secure: options.secure ?? (process.env.COOKIE_SECURE === "true"),
+        sameSite: options.sameSite ?? (process.env.COOKIE_SAMESITE || "lax"),
+        maxAge: options.maxAge ?? Number(process.env.COOKIE_MAXAGE || 86400000),
     });
 }
 export function getCookie(req, res, name) {

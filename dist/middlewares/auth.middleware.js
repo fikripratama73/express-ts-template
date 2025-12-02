@@ -1,18 +1,15 @@
-import { sendError } from "../utils/response.util";
-import { verifyToken } from "../lib/jwt";
-export const authMiddleware = (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    if (!authHeader)
-        return res.status(401).json(sendError("Authorization header missing"));
-    const token = authHeader.split(" ")[1];
-    if (!token)
-        return res.status(401).json(sendError("Token missing"));
+import { getCookie } from "../lib/cookies.js";
+import { verifyToken } from "../lib/jwt.js";
+export function authGuard(req, res, next) {
     try {
-        const decoded = verifyToken(token);
-        req.user = decoded;
+        const token = getCookie(req, res, "accessToken");
+        if (!token)
+            return res.status(401).json({ message: "Unauthorized" });
+        const payload = verifyToken(token);
+        req.user = payload;
         next();
     }
-    catch {
-        return res.status(403).json(sendError("Invalid or expired token"));
+    catch (err) {
+        return res.status(401).json({ message: "Invalid or expired token" });
     }
-};
+}

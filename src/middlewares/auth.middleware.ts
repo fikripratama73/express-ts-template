@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { getCookie } from "../lib/cookies";
-import { verifyToken } from "../lib/jwt";
+import { getCookie } from "../lib/cookies.js";
+import { verifyToken } from "../lib/jwt.js";
 
 export function authGuard(req: Request, res: Response, next: NextFunction) {
   try {

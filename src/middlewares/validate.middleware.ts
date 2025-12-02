@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { ZodObject, ZodError } from "zod";
-import { zodError } from "../utils/zodify.util";
+import { zodError } from "../utils/zodify.util.js";
 
 export const validate =
     (schema: ZodObject) =>

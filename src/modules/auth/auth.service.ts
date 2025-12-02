@@ -1,8 +1,8 @@
-import { prisma } from "../../lib/prisma";
-import { hashPassword, comparePassword } from "../../lib/bcrypt";
-import { generateToken } from "../../lib/jwt";
-import { RegisterInput, LoginInput } from "./auth.schema";
-import { Role } from "../../generated/prisma/enums";
+import { prisma } from "../../lib/prisma.js";
+import { hashPassword, comparePassword } from "../../lib/bcrypt.js";
+import { generateToken } from "../../lib/jwt.js";
+import { RegisterInput, LoginInput } from "./auth.schema.js";
+import { Role } from "../../generated/prisma/enums.js";
 
 export class AuthService {
     static async registerService(data: RegisterInput) {

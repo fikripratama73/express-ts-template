@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
+import "dotenv/config";
 import express, { Express } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 
-import authRouter from "./modules/auth/auth.route";
+import authRouter from "./modules/auth/auth.route.js";
+import userRouter from "./modules/users/user.route.js";
 
-dotenv.config();
 const app: Express = express();
 
 app.use(cors());
@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 
 app.get("/", (_, res) => {
   res.json({ message: "API is running..." });

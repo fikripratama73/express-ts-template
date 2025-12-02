@@ -59,14 +59,18 @@ export const UserScalarFieldEnum = {
     name: 'name',
     email: 'email',
     password: 'password',
-    role: 'role'
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const GameScalarFieldEnum = {
     id: 'id',
     name: 'name',
     imageUrl: 'imageUrl',
     needZoneId: 'needZoneId',
-    needServerId: 'needServerId'
+    needServerId: 'needServerId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const ProductScalarFieldEnum = {
     id: 'id',
@@ -74,13 +78,17 @@ export const ProductScalarFieldEnum = {
     name: 'name',
     value: 'value',
     price: 'price',
-    description: 'description'
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const PaymentMethodScalarFieldEnum = {
     id: 'id',
     name: 'name',
     type: 'type',
-    fee: 'fee'
+    fee: 'fee',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const TransactionScalarFieldEnum = {
     id: 'id',
@@ -93,7 +101,8 @@ export const TransactionScalarFieldEnum = {
     serverId: 'serverId',
     totalPrice: 'totalPrice',
     status: 'status',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const SortOrder = {
     asc: 'asc',
